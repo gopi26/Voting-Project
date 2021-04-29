@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Vote</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet'  href="{% static 'result.css' %}">
+    <script type="text/javascript">
+      window.history.forward();
+        function noBack(){
+          window.history.forward()
+      }
+      </script>
+</head>
+<body>
+    <div id="atags">
+    <div id="wrapper">
+    {% if user.is_authenticated %}
+    <div id="a1">
+    {% if request.user.is_superuser %}
+    <a href="{% url 'result' %}">Result</a>
+    {% endif %}
+    </div>
+    <div id="a2">
+    <a href="{% url 'logout' %}">Log Out</a>
+    </div>
+    </div>
+    </div>
+    {% ifequal flag  flag1 %}
+    <br>
+    <br>
+    <br>
+    <div id = "thanks">
+        <h1>Already Voted</h1>
+    </div>
+    {% else %}
+    <br>
+    <br>
+    <h4>Hi {{ user.username }}...Drop Your Vote!</h4>
+    <blockquote>SELECT THE CANDITATE</blockquote>
+
+    <form method="POST">
+        {% csrf_token %}
+
+    <table>
+        <thead>
+          <tr>
+            <th>CANDITATE</th>
+            <th></th>
+          </tr>
+        <thead>
+        <tbody>
+            {% for candi in canditates %}
+          <tr>
+            <td>{{candi.Name}}</td>
+            <td><input type="radio" id="voted" name="voted" value="{{candi}}"></td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td>No Canditates</td>
+            <td></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+    <br>
+
+    <button type="submit">Vote</button>
+    </form> 
+    {% endifequal %}
+
+    {% else %}
+
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Log In</a>
+    
+    {% endif %}
+
+    
+</body>
+</html>

@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Result</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet'  href="{% static 'result.css' %}">
+    <script type="text/javascript">
+      window.history.forward();
+        function noBack(){
+          window.history.forward()
+      }
+    </script>
+</head>
+<body>
+  {% if not request.user.is_superuser %}
+  <h1>You are not allowed to access this page. Kindly Login</h1>
+  {% else %}
+  <div id="atags">
+    <div id="wrapper">
+    <div id="a1">
+    <a href="{% url 'vote' %}">Back</a>
+    </div>
+    <div id="a2">
+    <a href="{% url 'logout' %}">Log Out</a>
+    </div>
+    </div>
+    </div>
+    <blockquote> RESULT </blockquote>
+    <table>
+        <thead>
+          <tr>
+            <th>CANDITATE</th>
+            <th>VOTES</th>
+          </tr>
+        <thead>
+        <tbody>
+            {% for candi in canditates %}
+          <tr>
+            <td>{{candi.Name}}</td>
+            <td>{{candi.Vote}}</td>
+          </tr>
+          {% endfor %}
+          <tr>
+              <td><a href="{% url 'add' %}">Add Canditate</a></td>
+              <td></td>
+          </tr>
+        </tbody>
+    </table>
+    {%endif%}
+    
+</body>
+</html>

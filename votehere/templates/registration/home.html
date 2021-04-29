@@ -1,0 +1,12 @@
+{% extends 'registration/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <a href="{% url 'vote' %}">Vote Now...</a>
+{% else %}
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
